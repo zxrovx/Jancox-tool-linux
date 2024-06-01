@@ -1,4 +1,3 @@
-brotli.level=1
+brotli.level=7
 archive.zip=enable
 clean.tmp=disable
-date.file.rom=2024-06-1
