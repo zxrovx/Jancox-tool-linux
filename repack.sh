@@ -11,6 +11,7 @@ out=./output
 tmp=./bin/tmp
 bin=./bin/linux
 prop=./bin/jancox.prop
+tunix=$(date -u +%s)
 clear
 if [ ! -d $edit/system ]; then echo "  Please Unpack !"; sleep 3s; exit;fi;
 echo "                        Jancox Tool by wahyu6070"
@@ -21,14 +22,14 @@ echo " "
 [ ! -d $tmp ] && mkdir $tmp
 if [ -d $edit/system ]; then
 echo "- Repack system"
-size1=`du -sk $edit/system | awk '{$1*=1024;$1=int($1*1.05);printf $1}'`
-$bin/make_ext4fs -s -L system -T 2009110000 -S $edit/system_file_contexts -C $edit/system_fs_config -l $size1 -a system $tmp/system.img $edit/system/ > /dev/null
+#size1=`du -sk $edit/system | awk '{$1*=1024;$1=int($1*1.05);printf $1}'`
+$bin/make_ext4fs -s -L system -T $tunix -S $edit/system_file_contexts -C $edit/system_fs_config -l 5114429440 -a system $tmp/system.img $edit/system/ > /dev/null
 fi
 
 if [ -d $edit/vendor ]; then
 echo "- Repack vendor"
-size2=`du -sk $edit/vendor | awk '{$1*=1024;$1=int($1*1.05);printf $1}'`
-$bin/make_ext4fs -s -L vendor -T 2009110000 -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l $size2 -a vendor $tmp/vendor.img $edit/vendor/ > /dev/null
+#size2=`du -sk $edit/vendor | awk '{$1*=1024;$1=int($1*1.05);printf $1}'`
+$bin/make_ext4fs -s -L vendor -T $tunix -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l 1452277760 -a vendor $tmp/vendor.img $edit/vendor/ > /dev/null
 fi;
 
 
@@ -80,11 +81,12 @@ fi
 [ -f $edit/compatibility.zip ] && cp -f $edit/compatibility.zip $tmp/
 [ -f $edit/compatibility_no_nfc.zip ] && cp -f $edit/compatibility_no_nfc.zip $tmp/
 
-datefile=$(getprop date.file.rom ./bin/jancox.prop)
-touch -cd $datefile 15:00:00 $tmp/*
-touch -cd $datefile 15:00:00 $tmp/firmware-update/*
-touch -cd $datefile 15:00:00 $tmp/META-INF/com/android/*
-touch -cd $datefile 15:00:00 $tmp/META-INF/com/google/android/*
+datefile=$(date +"%Y-%m-%d")
+datetime=$(date +"%H:%M:%S")
+touch -cd $datefile $datetime $tmp/*
+touch -cd $datefile $datetime $tmp/firmware-update/*
+touch -cd $datefile $datetime $tmp/META-INF/com/android/*
+touch -cd $datefile $datetime $tmp/META-INF/com/google/android/*
 
 
 if [ -d $tmp/META-INF ]; then
