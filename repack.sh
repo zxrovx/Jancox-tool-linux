@@ -34,14 +34,14 @@ fi;
 if [ -f $tmp/system.img ]; then
  		echo "- Repack system.img"
  		[ -f $tmp/system.new.dat ] && rm -rf tmp/system.new.dat
- 		python3 $bin/img2sdat.py $tmp/system.img -o $tmp -v 4 > /dev/null
+ 		python3 $bin/rimg2sdat.py $tmp/system.img -o $tmp -v 4 -p vendor > /dev/null
  		[ -f $tmp/system.img ] && rm -rf $tmp/system.img
 fi
 
 if [ -f $tmp/vendor.img ]; then
 		echo "- Repack vendor.img "
 		[ -f $tmp/vendor.new.dat ] && rm -rf tmp/vendor.new.dat
-		python3 $bin/img2sdat.py $tmp/vendor.img -o $tmp -v 4 -p vendor > /dev/null
+		python3 $bin/rimg2sdat.py $tmp/vendor.img -o $tmp -v 4 -p vendor > /dev/null
 		[ -f $tmp/vendor.img ] && rm -rf $tmp/vendor.img
 fi
 
