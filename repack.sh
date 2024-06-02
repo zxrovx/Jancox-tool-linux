@@ -82,7 +82,7 @@ fi
 datefile=$(date +"%Y-%m-%d")
 datetime=$(date +"%H:%M:%S")
 touch -cd $datefile $datetime $tmp/*
-touch -cd $datefile $datetime $tmp/install/*
+touch -cd $datefile $datetime $tmp/install/bin/*
 touch -cd $datefile $datetime $tmp/firmware-update/*
 touch -cd $datefile $datetime $tmp/META-INF/com/android/*
 touch -cd $datefile $datetime $tmp/META-INF/com/google/android/*
