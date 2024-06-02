@@ -153,4 +153,6 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    version = 4  # Android 7.x/8.x/9.x/10.x/11.x (default choosen versions)
+    main(sys.argv + [str(version)])
+
