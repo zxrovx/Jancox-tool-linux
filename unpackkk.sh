@@ -47,15 +47,6 @@ else
     input="$(zenity --title "Pick your ROM" --file-selection 2>/dev/null)"
 fi
 
-# Get username if root
-sleep 1s
-if [ "$(whoami)" == root ]; then
-    echo -n "Username Your PC : "
-    read username
-else
-    username=$(whoami)
-fi
-
 # Extract input zip file
 echo "- Using input from $input"
 if [ -f "$input" ]; then
@@ -119,9 +110,9 @@ if [ -f $tmp/vendor.img ]; then
 fi
 
 # Set permissions for extracted files
-echo "- Set permissions by $username..."
-sudo chown -R $username:$username $edit 2>/dev/null
-sudo chown -R $username:$username $tmp 2>/dev/null
+echo "- Set permissions by root..."
+sudo chown -R root:root $edit 2>/dev/null
+sudo chown -R root:root $tmp 2>/dev/null
 [ -f $tmp/system_file_contexts ] && mv -f $tmp/system_file_contexts $edit/
 [ -f $tmp/vendor_file_contexts ] && mv -f $tmp/vendor_file_contexts $edit/
 [ -f $tmp/system_fs_config ] && mv -f $tmp/system_fs_config $edit/
