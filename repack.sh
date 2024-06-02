@@ -22,12 +22,12 @@ echo " "
 [ ! -d $tmp ] && mkdir $tmp
 if [ -d $edit/system ]; then
 echo "- Repack system"
-$bin/make_ext4fs -L system -T $tunix -S $edit/system_file_contexts -C $edit/system_fs_config -l 5114429440 -a system $tmp/system.img $edit/system/ > /dev/null
+$bin/make_ext4fs -J -T $tunix -S $edit/system_file_contexts -C $edit/system_fs_config -l 5114429440 -a /system $tmp/system.img $edit/system/ > /dev/null
 fi
 
 if [ -d $edit/vendor ]; then
 echo "- Repack vendor"
-$bin/make_ext4fs -L vendor -T $tunix -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l 1452277760 -a vendor $tmp/vendor.img $edit/vendor/ > /dev/null
+$bin/make_ext4fs -J -T $tunix -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l 1452277760 -a vendor $tmp/vendor.img $edit/vendor/ > /dev/null
 fi;
 
 
