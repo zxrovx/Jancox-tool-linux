@@ -22,43 +22,13 @@ echo " "
 [ ! -d $tmp ] && mkdir $tmp
 if [ -d $edit/system ]; then
 echo "- Repack system"
-$bin/make_ext4fs -s -J -T $tunix -S $edit/system_file_contexts -C $edit/system_fs_config -l 5114429440 -a /system $tmp/system.img $edit/system/ > /dev/null
+$bin/make_ext4fs -J -T $tunix -S $edit/system_file_contexts -C $edit/system_fs_config -l 5114429440 -a /system $tmp/system.img $edit/system/ > /dev/null
 fi
 
 if [ -d $edit/vendor ]; then
 echo "- Repack vendor"
-$bin/make_ext4fs -s -J -T $tunix -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l 1452277760 -a /vendor $tmp/vendor.img $edit/vendor/ > /dev/null
+$bin/make_ext4fs -J -T $tunix -S $edit/vendor_file_contexts -C $edit/vendor_fs_config -l 1452277760 -a /vendor $tmp/vendor.img $edit/vendor/ > /dev/null
 fi;
-
-
-if [ -f $tmp/system.img ]; then
- 		echo "- Repack system.img"
- 		[ -f $tmp/system.new.dat ] && rm -rf tmp/system.new.dat
- 		python3 $bin/img2sdat.py $tmp/system.img -o $tmp -v 4 -p system > /dev/null
- 		[ -f $tmp/system.img ] && rm -rf $tmp/system.img
-fi
-
-if [ -f $tmp/vendor.img ]; then
-		echo "- Repack vendor.img "
-		[ -f $tmp/vendor.new.dat ] && rm -rf tmp/vendor.new.dat
-		python3 $bin/img2sdat.py $tmp/vendor.img -o $tmp -v 4 -p vendor > /dev/null
-		[ -f $tmp/vendor.img ] && rm -rf $tmp/vendor.img
-fi
-
-#level brotli
-brlvl=$(getprop brotli.level bin/jancox.prop)
-#
-if [ -f $tmp/system.new.dat ]; then
-    echo "- Repack system.new.dat"
-    [ -f $tmp/system.new.dat.br ] && rm -rf $tmp/system.new.dat.br
-	$bin/brotli -$brlvl -j -w 24 $tmp/system.new.dat -o $tmp/system.new.dat.br
-fi
-
-if [ -f $tmp/vendor.new.dat ]; then
-	[ -f $tmp/vendor.new.dat.br ] && rm -rf $tmp/vendor.new.dat.br
-	echo "- Repack vendor.new.dat"
-	$bin/brotli -$brlvl -j -w 24 $tmp/vendor.new.dat -o $tmp/vendor.new.dat.br
-fi
 
 if [ -d $edit/boot ] && [ -f $edit/boot.img ]; then
 		echo "- Repack boot"
